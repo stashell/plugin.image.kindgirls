@@ -156,6 +156,17 @@ class KindGirls():
 						'ThumbUrl': Img['src'],
 						'PhotoUrl': Link['href']
 					})
+
+				Girls = Soup.find('div', {'id': 'up_izq'})
+				GirlsLink = Girls.findAll('a')
+				
+				if(Girls):
+					
+					for Girl in GirlsLink:
+						Gallery.append({
+							'Name': Girl.text,
+							'Url': self.main_url % (Girl['href'].strip('/')),
+						})
 	
 		return Gallery
 

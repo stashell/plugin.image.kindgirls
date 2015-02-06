@@ -50,7 +50,7 @@ elif(Mode == 'month'):
 
 		for Month in Months:
 			item = xbmcgui.ListItem(Month['Name'])
-			xbmcplugin.addDirectoryItem(addon_handle, getAddonUrl({'mode': 'month', 'month': Month['Date']}), item, True)		
+			xbmcplugin.addDirectoryItem(addon_handle, getAddonUrl({'mode': 'month', 'month': Month['Date']}), item, True)
 	else:
 		Galleries = KindGirls.GetMonthGalleries(Month)
 
@@ -101,9 +101,16 @@ elif(Mode == 'gallery'):
 		GalleryUrl = GalleryUrl
 		Gallery = KindGirls.GetGallery(GalleryUrl)
 
+		log(Gallery)
+
 		if(Gallery):
 			for Image in Gallery:
-				item = xbmcgui.ListItem(label = Image['Title'], iconImage = Image['PhotoUrl'], thumbnailImage = Image['ThumbUrl'])
-				xbmcplugin.addDirectoryItem(addon_handle, Image['PhotoUrl'], item)			
+				
+				if 'Title' in Image:
+					item = xbmcgui.ListItem(label = Image['Title'], iconImage = Image['PhotoUrl'], thumbnailImage = Image['ThumbUrl'])
+					xbmcplugin.addDirectoryItem(addon_handle, Image['PhotoUrl'], item)
+				else:
+					item = xbmcgui.ListItem(label = "More galleries %s" % Image['Name'])
+					xbmcplugin.addDirectoryItem(addon_handle, getAddonUrl({'mode': 'girl', 'url': Image['Url']}), item, True)
 
 xbmcplugin.endOfDirectory(addon_handle)
