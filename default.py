@@ -101,8 +101,6 @@ elif(Mode == 'gallery'):
 		GalleryUrl = GalleryUrl
 		Gallery = KindGirls.GetGallery(GalleryUrl)
 
-		log(Gallery)
-
 		if(Gallery):
 			for Image in Gallery:
 				
