@@ -1,3 +1,4 @@
+import re
 from BeautifulSoup import BeautifulSoup
 import requests
 
@@ -6,6 +7,7 @@ class KindGirls():
 	main_url = 'http://www.kindgirls.com/%s'
 	photo_url = main_url % ('photo-archive')
 	girls_url = main_url % ('girls')
+	video_url = main_url % ('video-archive')
 
 	def GetMonths(self):
 		HTML = self.GetHTML(self.photo_url)
@@ -169,6 +171,54 @@ class KindGirls():
 						})
 	
 		return Gallery
+
+	def GetVideoGallery(self, Page):
+		Url = self.video_url + "/" + str(Page)
+		HTML = self.GetHTML(Url)
+		Gallery = None
+
+		if(HTML):
+			Soup = BeautifulSoup(HTML)
+			Videos = Soup.findAll('div', {'class': 'video_list'})
+			
+			if(Videos):
+				Gallery = []
+				
+				for Video in Videos:
+					Link = Video.find('a')
+					Img = Link.find('img')
+					
+					Gallery.append({
+						'Title': Link.text,
+						'Url': self.main_url % (Link['href'].strip('/')),
+						'ThumbUrl': self.main_url % (Img['src'].strip('/'))
+					})
+				
+				Pagination = Soup.find('div', {'class': 'paginar'})
+				NextPage = Pagination.find('a', text = re.compile('Next'))
+
+				if(NextPage):
+					Url = NextPage.parent['href']
+					Page = re.findall('[0-9]+', Url)[0]
+
+					Gallery.append({
+						'NextPage': Page
+					})
+				
+		return Gallery
+		
+	def GetVideoUrl(self, Url):
+		HTML = self.GetHTML(Url)
+		VideoUrl = None
+
+		if(HTML):
+			Soup = BeautifulSoup(HTML)
+			Source = Soup.find('source', {'type': 'video/mp4'})
+			
+			if(Source):
+				VideoUrl = Source['src']
+		
+		return VideoUrl
 
 	def GetHTML(self, url):
 		HTML = None
