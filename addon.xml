@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.image.kindgirls"
 	name="Kindgirls"
-	version="0.2"
+	version="0.2.1-alpha"
 	provider-name="DaM">
 	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.beautifulsoup" version="3.2.1"/>
-		<import addon="script.module.requests" version="2.3.0"/>
+		<import addon="xbmc.python" version="3.0.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.6.3"/>
+		<import addon="script.module.requests" version="2.22.0"/>
 	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>image</provides>
+	<extension point="xbmc.python.pluginsource" 
+		   library="default.py">
+	<provides>image video</provides>
 	</extension>
-	<extension point="xbmc.python.module" library="resources/lib"/>
+	<extension point="xbmc.python.module" 
+		   library="resources/lib"/>
+	</extension>
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">View photos and videos from http://www.kindgirls.com</summary>
@@ -24,3 +27,4 @@
 		<email>kontakt@dpisarczyk.pl</email>
 	</extension>
 </addon>
+3.0.1
