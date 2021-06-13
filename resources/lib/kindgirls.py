@@ -1,5 +1,5 @@
 import re
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup4 import BeautifulSoup4
 import requests
 
 class KindGirls():
